@@ -1,0 +1,50 @@
+{
+  "name": "dresden-heritage-viewer",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Interactive viewer for Dresden's architectural heritage",
+  "main": "electron/main.cjs",
+  "author": "Dresden Heritage Project",
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/start-services.mjs dev",
+    "dev:app": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "start": "node scripts/start-services.mjs production",
+    "start:app": "NODE_ENV=production node server.js",
+    "desktop": "electron .",
+    "desktop:dir": "npm run build && electron-builder --dir",
+    "desktop:windows": "npm run build && electron-builder --win nsis"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "latest",
+    "electron": "^37.2.6",
+    "electron-builder": "^26.0.12",
+    "maplibre-gl": "^5.24.0",
+    "ngeohash": "^0.6.4",
+    "react": "latest",
+    "react-dom": "latest",
+    "three": "^0.185.1",
+    "vite": "latest"
+  },
+  "build": {
+    "appId": "org.dresdenheritage.viewer",
+    "productName": "Dresden Heritage",
+    "asar": true,
+    "npmRebuild": false,
+    "directories": { "output": "release" },
+    "files": ["electron/**/*", "server.js", "package.json"],
+    "extraResources": [
+      { "from": "dist", "to": "dist" },
+      { "from": "DataBaseRead/09_Pocketbase-2D-3D/pocketbase.exe", "to": "pocketbase.exe" },
+      { "from": "DataBaseRead/09_Pocketbase-2D-3D/pb_migrations", "to": "pb_migrations", "filter": ["**/*.js", "!**/*:Zone.Identifier*"] }
+    ],
+    "win": { "target": [{ "target": "nsis", "arch": ["x64"] }], "artifactName": "Dresden-Heritage-Setup-${version}.${ext}" },
+    "nsis": {
+      "oneClick": false, "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true, "createStartMenuShortcut": true,
+      "shortcutName": "Dresden Heritage", "deleteAppDataOnUninstall": false
+    }
+  }
+}

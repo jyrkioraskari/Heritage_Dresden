@@ -1,5 +1,7 @@
 # Dresden buildings
 
+<img src="Screen.png" alt="Screenshot" width="800">
+
 ## Windows installer (recommended for end users)
 
 Windows users do not need Node.js, npm, PocketBase, or a server. Distribute the generated
